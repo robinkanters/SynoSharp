@@ -163,5 +163,22 @@ namespace SynologyApiTest.VideoStationTests
         {
             var tvEpisodes = VideoStation.FindEpisodes(null).Episodes;
         }
+
+        [TestMethod]
+        public void TvShowEpisode_ShouldGetStreamingUrl()
+        {
+            var data = VideoStation.Shows;
+            var show = data.Data.TvShows.First(s => s.Title.Contains(@"Mother"));
+
+            var episodes = VideoStation.FindEpisodes(show).Episodes.ToList();
+
+            var someEpisode = episodes.FirstOrDefault();
+
+            string url = VideoStation.BuildStreamingUrl(someEpisode);
+
+            Debug.WriteLine(url);
+
+            Assert.IsNotNull(url);
+        }
     }
 }
